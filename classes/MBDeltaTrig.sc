@@ -40,15 +40,16 @@ MBDeltaTrig {
         });
     }
 
-    play { arg out, target, server;
+    play { arg out;
+    // play { arg out, target, server;
         deltaFunc = mbData[minibeeID];
-        server = server ? Server.default;
-        bus = Bus.audio(server, numSpeakers);
+        // server = server ? Server.default;
+        // bus = Bus.audio(server, numSpeakers);
         if (task.isNil){
             this.createTask;
-            // make channel strip synth
-            synth = Synth.new(\chstrip_multi, [\in, bus, \out, out, \da, 2] ++ channelParameters, target);
-            task.play;
+        //     // make channel strip synth
+        //     synth = Synth.new(\chstrip_multi, [\in, bus, \out, out, \da, 2] ++ channelParameters, target);
+        //     task.play;
         }{
             "Task is playing. Stop it first".postln;
         };
@@ -56,19 +57,19 @@ MBDeltaTrig {
 
     // gentle stop
     release{ |releaseTime=1|
-        synth.release(releaseTime);
+        // synth.release(releaseTime);
         SystemClock.sched(releaseTime, { 
             task.stop; 
             task = nil; 
-            bus.free
+            // bus.free
         });
     }
 
     // emergency stop
     stop{
-        synth.free;
+        // synth.free;
         task.stop;
         task = nil;
-        bus.free;
+        // bus.free;
     }
 }

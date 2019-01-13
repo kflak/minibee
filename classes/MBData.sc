@@ -45,5 +45,4 @@ MBData {
             prevData = data.copy;
         };
     }
-
 }

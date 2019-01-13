@@ -5,34 +5,30 @@ MBMovingAverage {
 
     var <>minibeeID = 10;
     var <>windowSize = 20;
-    var <task, <x, <y, <z, <delta;
+    var <task, <x, <y, <z, <delta, <all;
 
-    *new { arg windowSize, minibeeID;
-        ^super.newCopyArgs(windowSize, minibeeID).init;
+    *new { arg  minibeeID, windowSize;
+        ^super.newCopyArgs(minibeeID, windowSize).init;
     }
 
     init {
     }
 
-    movingSum { arg in;
-        var oldValue, newValue, buffer, sum;
+    movingSum { arg newValue=0.0;
+        var oldValue, buffer, sum;
         oldValue = 0.0;
-        newValue = 0.0;
         sum = 0.0;
         buffer = 0.0 ! windowSize;
-
-        newValue = in;
         oldValue = buffer.pop;
         buffer = buffer.addFirst(newValue);
         sum = sum + newValue - oldValue;
         sum;
     }
 
-    createTask {
-        var in;
+    calculateAverage {
+        var in = 0.0 ! 4;
         var sum = 0.0 ! 4;
         var movingAverage = 0.0 ! 4;
-        var out = nil ! 4;
         task = TaskProxy.new({
             inf.do{
                 in = [
@@ -42,21 +38,23 @@ MBMovingAverage {
                     mbData[minibeeID].delta
                 ];
                 in.do{|i, idx|
-                    sum[idx] = movingSum(i).value;
+                    sum[idx] = this.movingSum(i).value;
                     movingAverage[idx] = sum[idx] / windowSize;
-                    resamplingFreq.reciprocal.wait;
                 };
                 x = movingAverage[0];
                 y = movingAverage[1];
                 z = movingAverage[2];
                 delta = movingAverage[3];
+                all = movingAverage.copy;
+                resamplingFreq.reciprocal.wait;
             }
-        })
+        });
     }
 
     play {
         if(task.isNil){
-            this.createTask;
+            this.calculateAverage;
+            task.play;
         }{
             "Task is playing. Stop it first".postln;
         };
