@@ -3,9 +3,9 @@ MBPosMatch {
     classvar <>mbData;
     classvar <>resamplingFreq = 20;
 
+    var <>threshold = 0.1;
     var <>recArray;
     var <>minibeeIDs;
-    var <>threshold = 0.1;
     var <free = false;
     var <>speedlim = 1;
     var <curPosition, <task, <all;

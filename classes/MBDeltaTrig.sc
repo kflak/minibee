@@ -13,8 +13,8 @@ MBDeltaTrig {
     var <bus, <task;
     var <deltaFunc, <synth;
 
-    *new { arg speedlim, threshold, minibeeID, minAmp, maxAmp, function, numSpeakers, channelParameters;
-        ^super.newCopyArgs( speedlim, threshold, minibeeID, minAmp, maxAmp, function, numSpeakers, channelParameters ).init;
+    *new { arg speedlim, threshold, minibeeID, minAmp, maxAmp, function, channelParameters;
+        ^super.newCopyArgs( speedlim, threshold, minibeeID, minAmp, maxAmp, function, channelParameters ).init;
     }
 
     init {
