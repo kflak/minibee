@@ -49,7 +49,7 @@ MBDeltaTrig {
             this.createTask;
         //     // make channel strip synth
         //     synth = Synth.new(\chstrip_multi, [\in, bus, \out, out, \da, 2] ++ channelParameters, target);
-        //     task.play;
+            task.play;
         }{
             "Task is playing. Stop it first".postln;
         };
